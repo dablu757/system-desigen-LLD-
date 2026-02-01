@@ -1,0 +1,110 @@
+**UML Diagrams (Unified Modeling Language)**
+    UML diagrams are visual blueprints used to design, understand, 
+    and communicate a system before (or alongside) coding.
+
+
+**Your diagram splits UML into two big categories**
+
+1. Structural UML Diagrams (Static)
+
+What they show
+
+    Structure of the system
+    Classes, objects, relationships
+    How code is organized, not how it runs
+
+Think: “What is the system made of?”
+
+**Common Structural Diagrams**
+
+1.Class Diagram ⭐ (most important)
+2.Object Diagram
+3.Component Diagram
+4.Deployment Diagram
+5.Package Diagram
+6.Composite Structure Diagram
+7.Profile Diagram
+
+>>Class Diagram (Most Important)<<
+
+
+Example :
+(Python mapping)
+-------------------------------------------
+class Car:
+    def start(self):
+        pass
+
+class ElectricCar(Car):
+    def charge(self):
+        pass
+-------------------------------------------
+
+UML Class Diagram shows:
+    a. Class name
+    b. Attributes
+    c. Methods
+
+->Relationships (Inheritance, Association, etc.)
+->Static → No execution order, no runtime flow
+........................................................
+
+2. Behavioral UML Diagrams (Dynamic)
+
+What they show?
+    a. How the system behaves at runtime
+    b. Interaction between objects
+    c. Order of method calls
+
+Think: “How does the system work?”
+
+Common Behavioral Diagrams (7 total)
+
+1.Sequence Diagram ⭐
+2.Use Case Diagram
+3.Activity Diagram
+4.State Diagram
+5.Communication Diagram
+6.Timing Diagram
+7.Interaction Overview Diagram
+
+>>Sequence Diagram (Most Important)<<
+
+Shows step-by-step interaction between objects.
+
+Example (Python flow)
+-------------------------------------------
+class User:
+    def login(self):
+        AuthService().authenticate()
+
+class AuthService:
+    def authenticate(self):
+        DB().get_user()
+
+class DB:
+    def get_user(self):
+        print("Fetching user from DB")
+
+-------------------------------------------
+Sequence Diagram shows:
+
+    User → AuthService
+    AuthService → DB
+    DB → AuthService
+    AuthService → User
+
+Dynamic → Time + order matters
+
+--------------------------------------
+Super-Crisp Interview Answer
+
+“UML diagrams are divided into Structural diagrams, 
+which show the static structure of the system like class diagrams, 
+and Behavioral diagrams, which show dynamic behavior 
+and interactions like sequence diagrams.”
+-------------------------------------------
+One-Line Memory Trick
+    Structural → NO time
+    Behavioral → HAS time
+-------------------------------------------

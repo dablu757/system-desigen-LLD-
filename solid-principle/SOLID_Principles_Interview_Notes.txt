@@ -1,0 +1,124 @@
+
+**SOLID PRINCIPLES INTERVIEW NOTES**
+================================
+
+SOLID is a set of 5 object-oriented design principles that help in writing
+clean, maintainable, scalable, and testable code.
+
+S->Single Responsibility Principle (SRP)
+-----------------------------------------
+Definition:
+A class should have only ONE reason to change.
+
+Meaning:
+Each class should do only one job or have one responsibility.
+
+Why?
+- Easier to maintain
+- Easier to test
+- Less impact when changes happen
+
+Example:
+User class should NOT handle database + email + validation together.
+Split responsibilities into separate classes.
+
+One-line interview answer:
+"A class should have only one responsibility and one reason to change."
+
+
+O –> Open / Closed Principle (OCP)
+--------------------------------
+Definition:
+Software entities should be OPEN for extension but CLOSED for modification.
+
+Meaning:
+You should be able to add new behaviour without changing existing code.
+
+Why?
+- Prevents breaking existing functionality
+- Improves scalability
+
+How?
+Use abstraction and polymorphism.
+
+Example:
+Instead of using if/else for payment types,
+create separate classes for each payment method.
+
+One-line interview answer:
+"Extend functionality without modifying existing code."
+
+
+L –> Liskov Substitution Principle (LSP)
+--------------------------------------
+Definition:
+Objects of a superclass should be replaceable with objects of a subclass
+without breaking the program.
+
+Meaning:
+Child class should honor the behavior of the parent class.
+
+Violation Example:
+If a subclass throws unexpected errors for parent behavior,
+LSP is broken.
+
+Why?
+- Prevents unexpected runtime issues
+- Ensures reliable polymorphism
+
+One-line interview answer:
+"Child classes must be usable in place of parent classes without issues."
+
+
+I –> Interface Segregation Principle (ISP)
+----------------------------------------
+Definition:
+Clients should not be forced to depend on methods they do not use.
+
+Meaning:
+Prefer multiple small, specific interfaces instead of one large interface.
+
+Why?
+- Cleaner design
+- Less unnecessary implementation
+- Better flexibility
+
+Example:
+Robot should not be forced to implement eat() method.
+
+One-line interview answer:
+"Many small interfaces are better than one large interface."
+
+
+D –> Dependency Inversion Principle (DIP)
+---------------------------------------
+Definition:
+High-level modules should not depend on low-level modules.
+Both should depend on abstractions.
+
+Meaning:
+Do not tightly couple your code to concrete implementations.
+
+How?
+Use dependency injection and abstractions.
+
+Why?
+- Loose coupling
+- Easy to swap implementations
+- Better testing (mocking)
+
+One-line interview answer:
+"Depend on abstractions, not concrete implementations."
+
+
+FINAL SUMMARY (VERY IMPORTANT)
+------------------------------
+S → One responsibility
+O → Extend, don’t modify
+L → Replace safely
+I → Small, focused interfaces
+D → Depend on abstractions
+
+Perfect one-shot interview definition:
+"SOLID principles are five object-oriented design principles that help
+build flexible, maintainable, and scalable software systems."

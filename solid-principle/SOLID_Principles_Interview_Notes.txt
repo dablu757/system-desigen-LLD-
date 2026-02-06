@@ -26,7 +26,7 @@ One-line interview answer:
 "A class should have only one responsibility and one reason to change."
 
 
-O –> Open / Closed Principle (OCP)
+O -> Open / Closed Principle (OCP)
 --------------------------------
 Definition:
 Software entities should be OPEN for extension but CLOSED for modification.
@@ -49,7 +49,7 @@ One-line interview answer:
 "Extend functionality without modifying existing code."
 
 
-L –> Liskov Substitution Principle (LSP)
+L -> Liskov Substitution Principle (LSP)
 --------------------------------------
 Definition:
 Objects of a superclass should be replaceable with objects of a subclass
@@ -70,7 +70,7 @@ One-line interview answer:
 "Child classes must be usable in place of parent classes without issues."
 
 
-I –> Interface Segregation Principle (ISP)
+I -> Interface Segregation Principle (ISP)
 ----------------------------------------
 Definition:
 Clients should not be forced to depend on methods they do not use.
@@ -90,7 +90,7 @@ One-line interview answer:
 "Many small interfaces are better than one large interface."
 
 
-D –> Dependency Inversion Principle (DIP)
+D -> Dependency Inversion Principle (DIP)
 ---------------------------------------
 Definition:
 High-level modules should not depend on low-level modules.
@@ -114,7 +114,7 @@ One-line interview answer:
 FINAL SUMMARY (VERY IMPORTANT)
 ------------------------------
 S → One responsibility
-O → Extend, don’t modify
+O → Extend, don't modify
 L → Replace safely
 I → Small, focused interfaces
 D → Depend on abstractions

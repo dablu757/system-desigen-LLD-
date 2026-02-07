@@ -2,17 +2,22 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
+from core.interfaces import Stage
 from core.pipeline import Pipeline
 from core.stages import Stage1LoadAndNormalize, Stage2CpuTransform, Stage3WriteOutput
 
 
+def default_stages() -> Dict[str, Stage]:
+    return {
+        Stage1LoadAndNormalize.name: Stage1LoadAndNormalize(),
+        Stage2CpuTransform.name: Stage2CpuTransform(),
+        Stage3WriteOutput.name: Stage3WriteOutput(),
+    }
+
+
 class PipelineExecutor:
-    def __init__(self) -> None:
-        stages = {
-            Stage1LoadAndNormalize.name: Stage1LoadAndNormalize(),
-            Stage2CpuTransform.name: Stage2CpuTransform(),
-            Stage3WriteOutput.name: Stage3WriteOutput(),
-        }
+    def __init__(self, stages: Optional[Dict[str, Stage]] = None) -> None:
+        stages = stages or default_stages()
         self.pipeline = Pipeline(stages)
 
     def run(

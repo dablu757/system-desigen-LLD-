@@ -1,14 +1,3 @@
-# system-desigen-LLD-
-
-This repo contains low-level design (LLD) examples for interview preparation.
-
-**Google Docs LLD**
-
-Location: `google_doc_LLD/google_doc_lld.py`
-
-**Class Diagram (Mermaid)**
-
-```mermaid
 classDiagram
     class DocumentElement {
         <<abstract>>
@@ -67,9 +56,3 @@ classDiagram
     Document "1" o-- "many" DocumentElement : contains
     DocumentEditor --> Document : uses
     DocumentEditor --> Persistence : strategy
-```
-
-**Patterns Used**
-
-- Composite: `Document` is composed of `DocumentElement` objects.
-- Strategy: `DocumentEditor` delegates persistence to `Persistence` implementations.

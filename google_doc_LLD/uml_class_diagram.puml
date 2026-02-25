@@ -1,0 +1,59 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class DocumentElement {
+  +render() : str
+}
+
+class TextElement {
+  -text : str
+  +__init__(text)
+  +render() : str
+}
+
+class ImageElement {
+  -image_path : str
+  +__init__(image_path)
+  +render() : str
+}
+
+class Document {
+  -elements : List[DocumentElement]
+  +__init__()
+  +add_element(element)
+  +render() : str
+}
+
+abstract class Persistence {
+  +save(document)
+}
+
+class SaveToFile {
+  -file_path : str
+  +__init__(file_path)
+  +save(document)
+}
+
+class SaveToDB {
+  +save(document)
+}
+
+class DocumentEditor {
+  -document : Document
+  -persistence : Persistence
+  +__init__(persistence)
+  +add_text(text)
+  +add_image(image_path)
+  +render_doc() : str
+  +save()
+}
+
+DocumentElement <|-- TextElement
+DocumentElement <|-- ImageElement
+Persistence <|-- SaveToFile
+Persistence <|-- SaveToDB
+
+Document "1" o-- "many" DocumentElement : contains
+DocumentEditor --> Document : uses
+DocumentEditor --> Persistence : strategy
+@enduml

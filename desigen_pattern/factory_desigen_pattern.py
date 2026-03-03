@@ -2,15 +2,30 @@ from abc import ABC, abstractmethod
 
 
 # ==========================================================
-# 1️⃣ SIMPLE FACTORY
+# 1️⃣ SIMPLE FACTORY PATTERN
 # ==========================================================
+"""
+Simple Factory:
+- Centralizes object creation logic.
+- Client does NOT instantiate concrete classes directly.
+- Uses mapping/conditional logic inside a single factory.
+- Not an official GoF pattern.
+"""
 
+
+# ----------------- Product Interface -----------------
 class SimpleBurger(ABC):
+    """
+    Abstract Product:
+    Defines the common interface for all burger types.
+    """
+
     @abstractmethod
     def prepare(self) -> None:
         pass
 
 
+# ----------------- Concrete Products -----------------
 class BasicBurger(SimpleBurger):
     def prepare(self) -> None:
         print("Preparing Basic Burger")
@@ -26,7 +41,12 @@ class PremiumBurger(SimpleBurger):
         print("Preparing Premium Burger")
 
 
+# ----------------- Factory Class -----------------
 class SimpleBurgerFactory:
+    """
+    Responsible for object creation.
+    Uses dictionary mapping instead of if-else.
+    """
 
     _burger_map = {
         "basic": BasicBurger,
@@ -36,7 +56,13 @@ class SimpleBurgerFactory:
 
     @staticmethod
     def create_burger(burger_type: str) -> SimpleBurger:
-        burger_class = SimpleBurgerFactory._burger_map.get(burger_type.lower())
+        """
+        Returns appropriate Burger instance
+        based on input type.
+        """
+        burger_class = SimpleBurgerFactory._burger_map.get(
+            burger_type.lower()
+        )
 
         if not burger_class:
             raise ValueError(f"Invalid burger type: {burger_type}")
@@ -45,17 +71,28 @@ class SimpleBurgerFactory:
 
 
 # ==========================================================
-# 2️⃣ FACTORY METHOD
+# 2️⃣ FACTORY METHOD PATTERN
 # ==========================================================
+"""
+Factory Method (GoF Pattern):
+- Defines an interface for creating objects.
+- Subclasses decide which concrete product to instantiate.
+- Replaces large conditional logic with polymorphism.
+"""
 
+
+# ----------------- Product Interface -----------------
 class Burger(ABC):
+    """
+    Common interface for all burgers.
+    """
+
     @abstractmethod
     def prepare(self) -> None:
         pass
 
 
-# ---------- Regular Burgers ----------
-
+# ----------------- Regular Product Family -----------------
 class RegularBasicBurger(Burger):
     def prepare(self) -> None:
         print("Preparing Regular Basic Burger")
@@ -71,8 +108,7 @@ class RegularPremiumBurger(Burger):
         print("Preparing Regular Premium Burger")
 
 
-# ---------- Wheat Burgers ----------
-
+# ----------------- Wheat Product Family -----------------
 class WheatBasicBurger(Burger):
     def prepare(self) -> None:
         print("Preparing Wheat Basic Burger")
@@ -88,18 +124,23 @@ class WheatPremiumBurger(Burger):
         print("Preparing Wheat Premium Burger")
 
 
-# ---------- Abstract Factory ----------
-
+# ----------------- Abstract Factory (Creator) -----------------
 class BurgerFactory(ABC):
+    """
+    Declares the Factory Method.
+    Subclasses implement object creation logic.
+    """
 
     @abstractmethod
     def create_burger(self, burger_type: str) -> Burger:
         pass
 
 
-# ---------- Concrete Factory 1 ----------
-
+# ----------------- Concrete Factory 1 -----------------
 class SinghBurgerFactory(BurgerFactory):
+    """
+    Responsible for creating Wheat burger family.
+    """
 
     _burger_map = {
         "basic": WheatBasicBurger,
@@ -116,9 +157,11 @@ class SinghBurgerFactory(BurgerFactory):
         return burger_class()
 
 
-# ---------- Concrete Factory 2 ----------
-
+# ----------------- Concrete Factory 2 -----------------
 class KingBurgerFactory(BurgerFactory):
+    """
+    Responsible for creating Regular burger family.
+    """
 
     _burger_map = {
         "basic": RegularBasicBurger,
@@ -136,82 +179,52 @@ class KingBurgerFactory(BurgerFactory):
 
 
 # ==========================================================
-# 3️⃣ CLIENT CODE
+# 3️⃣ ABSTRACT FACTORY PATTERN
 # ==========================================================
-
-# if __name__ == "__main__":
-
-#     print("=== Simple Factory ===")
-#     burger = SimpleBurgerFactory.create_burger("basic")
-#     burger.prepare()
-
-#     print("\n=== Factory Method ===")
-#     factory = SinghBurgerFactory()
-#     burger = factory.create_burger("premium")
-#     burger.prepare()
-
-#     factory = KingBurgerFactory()
-#     burger = factory.create_burger("standard")
-#     burger.prepare()
+"""
+Abstract Factory:
+- Creates families of related objects.
+- Ensures compatibility within a product family.
+- No conditional logic in client code.
+- Fully polymorphic and scalable.
+"""
 
 
-
-    from abc import ABC, abstractmethod
-
-
-# ==========================================================
-# 3 ABSTRACT FACTORY DESIGEN 
-# ==========================================================
-
-class Burger(ABC):
-    @abstractmethod
-    def prepare(self) -> None:
-        pass
-
-
+# ----------------- Abstract Products -----------------
 class Drink(ABC):
     @abstractmethod
     def serve(self) -> None:
         pass
 
 
-# ==========================================================
-# 2️⃣ REGULAR PRODUCT FAMILY
-# ==========================================================
-
-# Burgers
-class RegularBurger(Burger):
+# ----------------- Regular Product Family -----------------
+class RegularBurgerAF(Burger):
     def prepare(self) -> None:
-        print("Preparing Regular Burger")
+        print("Preparing Regular Burger (AF)")
 
 
-# Drinks
 class RegularDrink(Drink):
     def serve(self) -> None:
         print("Serving Regular Cold Drink")
 
 
-# ==========================================================
-# 3️⃣ WHEAT PRODUCT FAMILY
-# ==========================================================
-
-# Burgers
-class WheatBurger(Burger):
+# ----------------- Wheat Product Family -----------------
+class WheatBurgerAF(Burger):
     def prepare(self) -> None:
-        print("Preparing Wheat Burger")
+        print("Preparing Wheat Burger (AF)")
 
 
-# Drinks
 class WheatDrink(Drink):
     def serve(self) -> None:
         print("Serving Healthy Wheat Smoothie")
 
 
-# ==========================================================
-# 4️⃣ ABSTRACT FACTORY
-# ==========================================================
-
+# ----------------- Abstract Factory -----------------
 class RestaurantFactory(ABC):
+    """
+    Abstract Factory declares methods to create
+    multiple related products.
+    """
 
     @abstractmethod
     def create_burger(self) -> Burger:
@@ -222,33 +235,37 @@ class RestaurantFactory(ABC):
         pass
 
 
-# ==========================================================
-# 5️⃣ CONCRETE FACTORIES
-# ==========================================================
-
+# ----------------- Concrete Factories -----------------
 class SinghRestaurantFactory(RestaurantFactory):
+    """
+    Creates Regular product family.
+    """
 
     def create_burger(self) -> Burger:
-        return RegularBurger()
+        return RegularBurgerAF()
 
     def create_drink(self) -> Drink:
         return RegularDrink()
 
 
 class KingRestaurantFactory(RestaurantFactory):
+    """
+    Creates Wheat product family.
+    """
 
     def create_burger(self) -> Burger:
-        return WheatBurger()
+        return WheatBurgerAF()
 
     def create_drink(self) -> Drink:
         return WheatDrink()
 
 
-# ==========================================================
-# 6️⃣ CLIENT CODE
-# ==========================================================
-
+# ----------------- Client Code -----------------
 def serve_customer(factory: RestaurantFactory) -> None:
+    """
+    Client depends only on abstract factory.
+    Completely decoupled from concrete classes.
+    """
     burger = factory.create_burger()
     drink = factory.create_drink()
 

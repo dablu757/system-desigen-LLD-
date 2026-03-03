@@ -1,0 +1,116 @@
+@startuml
+skinparam classAttributeIconSize 0
+title Factory Patterns - Burger Example
+
+package "Simple Factory" {
+  abstract class SimpleBurger {
+    +prepare(): None
+  }
+
+  class BasicBurger
+  class StandardBurger
+  class PremiumBurger
+
+  class SimpleBurgerFactory {
+    -_burger_map: dict
+    +create_burger(burger_type: str): SimpleBurger
+  }
+
+  SimpleBurger <|-- BasicBurger
+  SimpleBurger <|-- StandardBurger
+  SimpleBurger <|-- PremiumBurger
+
+  SimpleBurgerFactory ..> SimpleBurger : creates
+  SimpleBurgerFactory ..> BasicBurger
+  SimpleBurgerFactory ..> StandardBurger
+  SimpleBurgerFactory ..> PremiumBurger
+}
+
+package "Factory Method" {
+  abstract class Burger {
+    +prepare(): None
+  }
+
+  class RegularBasicBurger
+  class RegularStandardBurger
+  class RegularPremiumBurger
+  class WheatBasicBurger
+  class WheatStandardBurger
+  class WheatPremiumBurger
+
+  abstract class BurgerFactory {
+    +create_burger(burger_type: str): Burger
+  }
+
+  class SinghBurgerFactory
+  class KingBurgerFactory
+
+  Burger <|-- RegularBasicBurger
+  Burger <|-- RegularStandardBurger
+  Burger <|-- RegularPremiumBurger
+  Burger <|-- WheatBasicBurger
+  Burger <|-- WheatStandardBurger
+  Burger <|-- WheatPremiumBurger
+
+  BurgerFactory <|-- SinghBurgerFactory
+  BurgerFactory <|-- KingBurgerFactory
+
+  SinghBurgerFactory ..> WheatBasicBurger : creates
+  SinghBurgerFactory ..> WheatStandardBurger : creates
+  SinghBurgerFactory ..> WheatPremiumBurger : creates
+
+  KingBurgerFactory ..> RegularBasicBurger : creates
+  KingBurgerFactory ..> RegularStandardBurger : creates
+  KingBurgerFactory ..> RegularPremiumBurger : creates
+}
+
+package "Abstract Factory" {
+  abstract class Burger_AF {
+    +prepare(): None
+  }
+
+  abstract class Drink {
+    +serve(): None
+  }
+
+  class RegularBurger
+  class WheatBurger
+  class RegularDrink
+  class WheatDrink
+
+  abstract class RestaurantFactory {
+    +create_burger(): Burger_AF
+    +create_drink(): Drink
+  }
+
+  class SinghRestaurantFactory
+  class KingRestaurantFactory
+
+  class Client {
+    +serve_customer(factory: RestaurantFactory): None
+  }
+
+  Burger_AF <|-- RegularBurger
+  Burger_AF <|-- WheatBurger
+  Drink <|-- RegularDrink
+  Drink <|-- WheatDrink
+
+  RestaurantFactory <|-- SinghRestaurantFactory
+  RestaurantFactory <|-- KingRestaurantFactory
+
+  SinghRestaurantFactory ..> RegularBurger : creates
+  SinghRestaurantFactory ..> RegularDrink : creates
+
+  KingRestaurantFactory ..> WheatBurger : creates
+  KingRestaurantFactory ..> WheatDrink : creates
+
+  Client ..> RestaurantFactory : depends on
+}
+
+note bottom
+The code reuses class name Burger in multiple sections.
+In this UML, Abstract Factory burger is named Burger_AF
+for clarity and to avoid name collision in the diagram.
+end note
+
+@enduml

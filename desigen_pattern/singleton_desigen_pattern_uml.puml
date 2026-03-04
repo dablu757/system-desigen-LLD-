@@ -1,0 +1,95 @@
+@startuml
+skinparam classAttributeIconSize 0
+title Singleton Design Pattern Variants - Python Example
+
+package "1) Classic Singleton" {
+  class AppConfigSingleton {
+    -_instance: AppConfigSingleton
+    +__new__(): AppConfigSingleton
+    +show(): None
+    +env: str
+    +debug: bool
+  }
+
+  note right of AppConfigSingleton
+    Uses __new__ to ensure
+    only one instance exists.
+  end note
+}
+
+package "2) Singleton via Metaclass" {
+  class SingletonMeta {
+    -_instances: dict[type, object]
+    +__call__(*args, **kwargs)
+  }
+
+  class Logger {
+    +logs: list[str]
+    +log(message: str): None
+  }
+
+  SingletonMeta <|-- Logger : metaclass
+  Logger ..> SingletonMeta : instance managed by
+}
+
+package "3) Thread-safe Singleton" {
+  class DatabaseConnection {
+    -_instance: DatabaseConnection
+    -_lock: Lock
+    +__new__(): DatabaseConnection
+    +connect(): None
+    +connected: bool
+  }
+
+  note right of DatabaseConnection
+    Double-checked locking
+    for thread-safe creation.
+  end note
+}
+
+package "4) Borg / Monostate" {
+  class SharedState {
+    -_shared_state: dict
+    +__init__(): None
+  }
+
+  class Cache {
+    +store: dict[str, str]
+    +set(key: str, value: str): None
+    +get(key: str): str | None
+  }
+
+  SharedState <|-- Cache
+  note right of Cache
+    Multiple objects,
+    shared internal state.
+  end note
+}
+
+package "5) Interface + Singleton" {
+  abstract class Notifier {
+    +send(msg: str): None
+  }
+
+  class NotificationService {
+    +send(msg: str): None
+  }
+
+  Notifier <|-- NotificationService
+  SingletonMeta <|-- NotificationService : metaclass
+}
+
+package "Client Demo" {
+  class Main {
+    +_thread_job(): None
+    +__main__ flow
+  }
+
+  Main ..> AppConfigSingleton
+  Main ..> Logger
+  Main ..> DatabaseConnection
+  Main ..> Cache
+  Main ..> NotificationService
+}
+
+@enduml

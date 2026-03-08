@@ -1,0 +1,109 @@
+@startuml
+skinparam classAttributeIconSize 0
+left to right direction
+title Food Delivery App - LLD Class Diagram
+
+class User {
+  +id: int
+  +name: str
+  +address: str
+  +cart: Cart
+}
+
+class Cart {
+  +restaurant: Restaurant
+  +items: List<MenuItem>
+  +total: float
+  +add_to_cart(item: MenuItem): void
+  +clear(): void
+  +is_empty(): bool
+}
+
+class Restaurant {
+  +id: int
+  +name: str
+  +address: str
+  +menu_items: List<MenuItem>
+}
+
+class MenuItem {
+  +code: int
+  +name: str
+  +price: float
+}
+
+class RestaurantManager <<singleton>> {
+  -restaurants: List<Restaurant>
+  +add_restaurant(r: Restaurant): void
+  +search_by_location(location: str): List<Restaurant>
+}
+
+abstract class Order {
+  +id: int
+  +restaurant: Restaurant
+  +items: List<MenuItem>
+  +user: User
+  +payment_strategy: PaymentStrategy
+  +get_type(): str
+}
+
+class DeliveryOrder {
+  +get_type(): str
+}
+
+class PickupOrder {
+  +get_type(): str
+}
+
+interface OrderFactory {
+  +create_order(...): Order
+}
+
+class NowOrderFactory {
+  +create_order(...): Order
+}
+
+class ScheduledOrderFactory {
+  +create_order(...): Order
+}
+
+abstract class PaymentStrategy {
+  +pay(amount: float): bool
+}
+
+class UPI {
+  +pay(amount: float): bool
+}
+
+class NetBanking {
+  +pay(amount: float): bool
+}
+
+class OrderManager <<singleton>> {
+  -orders: List<Order>
+  +add_order(order: Order): void
+  +get_order(order_id: int): Order
+}
+
+class NotificationService {
+  +notify(order: Order): void
+}
+
+User *-- Cart
+Restaurant *-- "1..*" MenuItem
+RestaurantManager o-- "0..*" Restaurant
+OrderManager o-- "0..*" Order
+Order --> Restaurant
+Order --> User
+Order --> "1..*" MenuItem
+Order --> PaymentStrategy
+OrderFactory ..> Order : creates
+NowOrderFactory ..|> OrderFactory
+ScheduledOrderFactory ..|> OrderFactory
+DeliveryOrder --|> Order
+PickupOrder --|> Order
+UPI --|> PaymentStrategy
+NetBanking --|> PaymentStrategy
+NotificationService ..> Order
+
+@enduml

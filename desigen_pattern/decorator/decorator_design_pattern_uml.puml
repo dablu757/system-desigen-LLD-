@@ -1,0 +1,51 @@
+@startuml
+skinparam classAttributeIconSize 0
+title Decorator Pattern - Coffee Example
+
+abstract class Coffee {
+  +cost(): int
+  +description(): str
+}
+
+class SimpleCoffee {
+  +cost(): int
+  +description(): str
+}
+
+abstract class CoffeeDecorator {
+  -_coffee: Coffee
+  +cost(): int
+  +description(): str
+}
+
+class MilkDecorator {
+  +cost(): int
+  +description(): str
+}
+
+class SugarDecorator {
+  +cost(): int
+  +description(): str
+}
+
+class WhippedCreamDecorator {
+  +cost(): int
+  +description(): str
+}
+
+Coffee <|-- SimpleCoffee
+Coffee <|-- CoffeeDecorator
+CoffeeDecorator <|-- MilkDecorator
+CoffeeDecorator <|-- SugarDecorator
+CoffeeDecorator <|-- WhippedCreamDecorator
+
+CoffeeDecorator o-- Coffee : wraps
+
+note right of CoffeeDecorator
+Decorator keeps a reference
+to a Coffee object and adds
+extra behavior before or after
+delegating the call.
+end note
+
+@enduml

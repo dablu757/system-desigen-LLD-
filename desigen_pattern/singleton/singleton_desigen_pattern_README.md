@@ -6,13 +6,15 @@ Source file: `desigen_pattern/singleton_desigen_pattern.py`
 
 ## What is Singleton?
 
-Singleton is a creational design pattern that ensures a class has only one instance and provides a global access point to that instance.
+Singleton is a creational design pattern
+that ensures --> a class has only one instance 
+and provides a global access point to that instance.
 
 Typical use cases:
 - Application configuration
 - Logger service
 - Database connection manager
-- Shared in-memory cache
+- Shared in-memory cachels
 
 ## Implementations Covered
 

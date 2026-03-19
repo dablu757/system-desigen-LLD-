@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+title Observer Pattern - YouTube Channel Example
+
+abstract class Observer {
+  +update(message: str): None
+}
+
+abstract class Subject {
+  +attach(observer: Observer): None
+  +detach(observer: Observer): None
+  +notify(): None
+}
+
+class YouTubeChannel {
+  -_observers: list
+  -_video: str
+  +attach(observer: Observer): None
+  +detach(observer: Observer): None
+  +notify(): None
+  +upload_video(video_title: str): None
+}
+
+class EmailSubscriber {
+  +update(message: str): None
+}
+
+class MobileSubscriber {
+  +update(message: str): None
+}
+
+Subject <|-- YouTubeChannel
+Observer <|-- EmailSubscriber
+Observer <|-- MobileSubscriber
+
+YouTubeChannel o-- Observer : maintains
+YouTubeChannel ..> Observer : notifies
+
+note right of YouTubeChannel
+When upload_video() is called,
+the channel updates its state
+and notifies all subscribers.
+end note
+
+@enduml

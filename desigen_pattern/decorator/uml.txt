@@ -1,0 +1,51 @@
+Decorator Pattern - Coffee Example
+==================================
+
+                    +----------------------+
+                    |        Coffee        |
+                    +----------------------+
+                    | + cost()             |
+                    | + description()      |
+                    +----------------------+
+                              ^
+                              |
+                +---------------------------+
+                |       SimpleCoffee        |
+                +---------------------------+
+                | + cost()                  |
+                | + description()           |
+                +---------------------------+
+
+
+                    +----------------------+
+                    |    CoffeeDecorator   |
+                    +----------------------+
+                    | - _coffee: Coffee    |
+                    | + cost()             |
+                    | + description()      |
+                    +----------------------+
+                              ^
+              ----------------|----------------
+              |               |               |
+              |               |               |
+  +-------------------+ +-------------------+ +---------------------------+
+  |   MilkDecorator   | |  SugarDecorator   | |  WhippedCreamDecorator   |
+  +-------------------+ +-------------------+ +---------------------------+
+  | + cost()          | | + cost()          | | + cost()                  |
+  | + description()   | | + description()   | | + description()           |
+  +-------------------+ +-------------------+ +---------------------------+
+
+
+Relationship:
+- SimpleCoffee implements Coffee
+- CoffeeDecorator also implements Coffee
+- Concrete decorators inherit from CoffeeDecorator
+- CoffeeDecorator wraps a Coffee object
+
+Flow:
+SimpleCoffee
+   -> MilkDecorator(SimpleCoffee)
+   -> SugarDecorator(MilkDecorator)
+   -> WhippedCreamDecorator(SugarDecorator)
+
+Final object behaves like Coffee, but with added features.

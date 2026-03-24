@@ -1,0 +1,495 @@
+DESIGN PATTERNS INTERVIEW PREP
+==============================
+
+Branch: main
+Covered so far:
+1. Factory Pattern
+2. Singleton Pattern
+3. Strategy Pattern
+4. Observer Pattern
+5. Decorator Pattern
+
+
+======================================================================
+1) FACTORY PATTERN
+======================================================================
+
+Source:
+- desigen_pattern/1_factory/factory_desigen_pattern.py
+
+Definition:
+Factory pattern is used to create objects without exposing the exact object
+creation logic to the client.
+
+Why use it:
+- Hides object creation logic
+- Reduces tight coupling
+- Makes code easier to extend
+
+Variants covered:
+- Simple Factory
+- Factory Method
+- Abstract Factory
+
+Quick interview line:
+Factory moves object creation into a separate place so the client depends on
+abstractions, not concrete classes.
+
+
+1A) Simple Factory
+------------------
+Idea:
+One factory class decides which object to create.
+
+In your code:
+- Product interface: SimpleBurger
+- Concrete products: BasicBurger, StandardBurger, PremiumBurger
+- Factory: SimpleBurgerFactory
+
+When to use:
+- When object creation logic is centralized
+- When you want to avoid repeated if-else in client code
+
+ASCII UML:
+
+                 +----------------------+
+                 |    SimpleBurger      |
+                 +----------------------+
+                 | + prepare()          |
+                 +----------------------+
+                    ^        ^        ^
+                    |        |        |
+         +-------------+ +-------------+ +-------------+
+         | BasicBurger | |StandardBurger| |PremiumBurger|
+         +-------------+ +-------------+ +-------------+
+
+                 +---------------------------+
+                 |  SimpleBurgerFactory      |
+                 +---------------------------+
+                 | + create_burger(type)     |
+                 +---------------------------+
+                              |
+                              v
+                        creates burgers
+
+
+1B) Factory Method
+------------------
+Idea:
+Creation is delegated to subclasses through polymorphism.
+
+In your code:
+- Product: Burger
+- Creator: BurgerFactory
+- Concrete factories: SinghBurgerFactory, KingBurgerFactory
+- Products:
+  - WheatBasicBurger, WheatStandardBurger, WheatPremiumBurger
+  - RegularBasicBurger, RegularStandardBurger, RegularPremiumBurger
+
+When to use:
+- When different subclasses decide different product creation logic
+- When you want to replace conditionals with polymorphism
+
+ASCII UML:
+
+                 +-------------------+
+                 |      Burger       |
+                 +-------------------+
+                 | + prepare()       |
+                 +-------------------+
+                    ^            ^
+                    |            |
+         Regular burgers     Wheat burgers
+
+                 +-------------------------+
+                 |     BurgerFactory       |
+                 +-------------------------+
+                 | + create_burger(type)   |
+                 +-------------------------+
+                      ^               ^
+                      |               |
+        +------------------------+  +------------------------+
+        |   KingBurgerFactory    |  |  SinghBurgerFactory    |
+        +------------------------+  +------------------------+
+        | creates RegularBurger* |  | creates WheatBurger*   |
+        +------------------------+  +------------------------+
+
+
+1C) Abstract Factory
+--------------------
+Idea:
+Creates families of related objects.
+
+In your code:
+- Abstract products: Burger, Drink
+- Abstract factory: RestaurantFactory
+- Concrete factories:
+  - SinghRestaurantFactory
+  - KingRestaurantFactory
+
+When to use:
+- When related objects should be created together
+- When compatibility inside a product family matters
+
+ASCII UML:
+
+              +----------------------------+
+              |     RestaurantFactory      |
+              +----------------------------+
+              | + create_burger()          |
+              | + create_drink()           |
+              +----------------------------+
+                    ^                 ^
+                    |                 |
+     +--------------------------+   +--------------------------+
+     | SinghRestaurantFactory   |   | KingRestaurantFactory    |
+     +--------------------------+   +--------------------------+
+     | creates RegularBurgerAF  |   | creates WheatBurgerAF    |
+     | creates RegularDrink     |   | creates WheatDrink       |
+     +--------------------------+   +--------------------------+
+
+Quick difference:
+- Simple Factory = one class creates objects
+- Factory Method = subclass decides what to create
+- Abstract Factory = creates related object families
+
+
+======================================================================
+2) SINGLETON PATTERN
+======================================================================
+
+Source:
+- desigen_pattern/2_singleton/singleton_desigen_pattern.py
+
+Definition:
+Singleton ensures that only one instance of a class exists and provides a
+global access point to that instance.
+
+Why use it:
+- Shared config object
+- Logger
+- Database connection manager
+- Cache manager
+
+Quick interview line:
+Singleton is used when exactly one shared instance should exist across the
+application.
+
+Variants covered in your code:
+- Classic Singleton using __new__
+- Singleton via Metaclass
+- Thread-safe Singleton
+- Borg / Monostate
+- Interface + Singleton
+
+ASCII UML:
+
+              +-----------------------------+
+              |     AppConfigSingleton      |
+              +-----------------------------+
+              | - _instance                 |
+              | + __new__()                 |
+              | + show()                    |
+              +-----------------------------+
+
+
+              +-----------------------------+
+              |       SingletonMeta         |
+              +-----------------------------+
+              | - _instances                |
+              | + __call__()                |
+              +-----------------------------+
+                         ^
+                         |
+              +-----------------------------+
+              |           Logger            |
+              +-----------------------------+
+              | + log(message)              |
+              +-----------------------------+
+
+
+              +-----------------------------+
+              |    DatabaseConnection       |
+              +-----------------------------+
+              | - _instance                 |
+              | - _lock                     |
+              | + __new__()                 |
+              | + connect()                 |
+              +-----------------------------+
+
+
+Key interview point:
+- Singleton is about one instance
+- Borg is different: many objects can exist, but state is shared
+
+Disadvantage:
+- Can behave like global state and make testing harder
+
+
+======================================================================
+3) STRATEGY PATTERN
+======================================================================
+
+Source:
+- desigen_pattern/3_strategy/strategy_desigen_pattern.py
+
+Definition:
+Strategy defines a family of algorithms, encapsulates each one, and makes them
+interchangeable at runtime.
+
+Why use it:
+- Multiple ways to do the same task
+- Avoid long if-elif chains
+- Change behavior at runtime
+
+In your code:
+- Strategy interface: Payment
+- Concrete strategies:
+  - UpiPayment
+  - CreditCardPayment
+  - DebitCardPayment
+- Context: PaymentService
+
+Quick interview line:
+Strategy lets us switch behavior dynamically by composing an object with a
+selected algorithm.
+
+ASCII UML:
+
+                 +-------------------+
+                 |      Payment      |
+                 +-------------------+
+                 | + pay()           |
+                 +-------------------+
+                    ^       ^      ^
+                    |       |      |
+           +-----------+ +-----------+ +------------------+
+           |UpiPayment | |DebitCard  | |CreditCardPayment |
+           +-----------+ +-----------+ +------------------+
+
+                 +-------------------+
+                 |   PaymentService  |
+                 +-------------------+
+                 | - _payment        |
+                 | + pay()           |
+                 +-------------------+
+                           |
+                           v
+                    uses Payment
+
+When to use:
+- Payment options
+- Sorting algorithms
+- Route planning
+- Discount rules
+
+Difference from State:
+- Strategy = client chooses behavior
+- State = object changes behavior based on internal state
+
+
+======================================================================
+4) OBSERVER PATTERN
+======================================================================
+
+Source:
+- desigen_pattern/observer/observer.py
+- desigen_pattern/observer/OBSERVER_DES_README.md
+
+Definition:
+Observer defines a one-to-many dependency between objects so that when one
+object changes state, all dependent objects are notified automatically.
+
+Real-life example:
+- YouTube channel and subscribers
+
+In your code/design:
+- Observer
+- Subject
+- YouTubeChannel
+- EmailSubscriber
+- MobileSubscriber
+
+Quick interview line:
+Observer is used when many objects should automatically react to a change in
+one object.
+
+ASCII UML:
+
+               +-------------------+
+               |      Subject      |
+               +-------------------+
+               | + attach()        |
+               | + detach()        |
+               | + notify()        |
+               +-------------------+
+                        ^
+                        |
+               +-------------------+
+               |   YouTubeChannel  |
+               +-------------------+
+               | - _observers      |
+               | - _video          |
+               | + upload_video()  |
+               +-------------------+
+
+
+               +-------------------+
+               |     Observer      |
+               +-------------------+
+               | + update()        |
+               +-------------------+
+                    ^         ^
+                    |         |
+      +-------------------+  +-------------------+
+      | EmailSubscriber   |  | MobileSubscriber  |
+      +-------------------+  +-------------------+
+
+Flow:
+Subject changes state
+-> Subject calls notify()
+-> All observers receive update()
+
+When to use:
+- Notifications
+- Event listeners
+- MVC updates
+- Stock price updates
+
+Observer vs Pub-Sub:
+- Observer = direct relation between subject and observers
+- Pub-Sub = broker/event bus in between
+
+
+======================================================================
+5) DECORATOR PATTERN
+======================================================================
+
+Source:
+- desigen_pattern/decorator/decorator.py
+- desigen_pattern/decorator/DECORATOR_DES_README.md
+
+Definition:
+Decorator adds new behavior to an object dynamically without changing the
+original class.
+
+Real-life example:
+- Coffee with milk, sugar, whipped cream
+
+In your code:
+- Component: Coffee
+- Concrete component: SimpleCoffee
+- Base decorator: CoffeeDecorator
+- Concrete decorators:
+  - MilkDecorator
+  - SugarDecorator
+  - WhippedCreamDecorator
+
+Quick interview line:
+Decorator wraps an object and adds extra behavior at runtime.
+
+ASCII UML:
+
+                +----------------------+
+                |        Coffee        |
+                +----------------------+
+                | + cost()             |
+                | + description()      |
+                +----------------------+
+                         ^
+                         |
+                +----------------------+
+                |     SimpleCoffee     |
+                +----------------------+
+
+
+                +----------------------+
+                |   CoffeeDecorator    |
+                +----------------------+
+                | - _coffee: Coffee    |
+                | + cost()             |
+                | + description()      |
+                +----------------------+
+                         ^
+             ------------|-------------
+             |           |            |
+             |           |            |
+    +----------------+ +----------------+ +------------------------+
+    | MilkDecorator  | | SugarDecorator | | WhippedCreamDecorator |
+    +----------------+ +----------------+ +------------------------+
+
+Flow:
+SimpleCoffee
+-> MilkDecorator(SimpleCoffee)
+-> SugarDecorator(MilkDecorator)
+-> WhippedCreamDecorator(SugarDecorator)
+
+When to use:
+- To add features dynamically
+- To avoid subclass explosion
+- For flexible combinations of behavior
+
+Decorator vs Inheritance:
+- Inheritance adds behavior at class level
+- Decorator adds behavior at object level
+
+
+======================================================================
+FAST REVISION LINES
+======================================================================
+
+Factory:
+- Focus is object creation
+
+Singleton:
+- Focus is only one shared instance
+
+Strategy:
+- Focus is interchangeable algorithms
+
+Observer:
+- Focus is automatic notification on state change
+
+Decorator:
+- Focus is dynamic behavior addition by wrapping
+
+
+======================================================================
+WHEN TO DRAW UML IN INTERVIEW
+======================================================================
+
+Best order:
+1. Give one-line definition
+2. Draw small UML / class structure
+3. Explain flow
+4. Write code
+
+Important:
+- Keep UML simple
+- Draw only boxes, inheritance, and relation arrows
+- Do not waste time making perfect formal UML
+
+
+======================================================================
+BEST ONE-LINE DIFFERENCES
+======================================================================
+
+Factory vs Abstract Factory:
+- Factory creates one product
+- Abstract Factory creates families of related products
+
+Strategy vs State:
+- Strategy is chosen from outside
+- State changes behavior from inside
+
+Observer vs Pub-Sub:
+- Observer has direct subject-observer relation
+- Pub-Sub uses broker/event bus
+
+Decorator vs Inheritance:
+- Decorator adds behavior dynamically
+- Inheritance adds behavior statically
+
+Singleton vs Static Class:
+- Singleton still creates one object
+- Static class usually has no instance

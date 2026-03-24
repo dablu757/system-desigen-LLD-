@@ -1,0 +1,38 @@
+@startuml
+skinparam classAttributeIconSize 0
+title Strategy Pattern - Payment Example
+
+abstract class Payment {
+  +pay(): None
+}
+
+class UpiPayment {
+  +pay(): None
+}
+
+class DebitCardPayment {
+  +pay(): None
+}
+
+class CreditCardPayment {
+  +pay(): None
+}
+
+class PaymentService {
+  -_payment: Payment
+  +pay(): None
+}
+
+Payment <|-- UpiPayment
+Payment <|-- DebitCardPayment
+Payment <|-- CreditCardPayment
+
+PaymentService o-- Payment : uses
+
+note right of PaymentService
+The context delegates the
+payment operation to the
+selected strategy object.
+end note
+
+@enduml

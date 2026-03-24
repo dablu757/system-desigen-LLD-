@@ -1,0 +1,39 @@
+Strategy Pattern - Payment Example
+==================================
+
+                   +-------------------+
+                   |      Payment      |
+                   +-------------------+
+                   | + pay()           |
+                   +-------------------+
+                      ^        ^       ^
+                      |        |       |
+         +---------------+ +------------------+ +---------------------+
+         |  UpiPayment   | | DebitCardPayment | | CreditCardPayment   |
+         +---------------+ +------------------+ +---------------------+
+         | + pay()       | | + pay()          | | + pay()             |
+         +---------------+ +------------------+ +---------------------+
+
+
+                   +----------------------+
+                   |    PaymentService    |
+                   +----------------------+
+                   | - _payment: Payment  |
+                   | + pay()              |
+                   +----------------------+
+                              |
+                              v
+                         uses Payment
+
+
+Relationship:
+- Payment is the strategy interface
+- UpiPayment, DebitCardPayment, and CreditCardPayment are concrete strategies
+- PaymentService is the context
+- Context delegates payment work to the selected strategy
+
+Flow:
+Client selects strategy
+-> PaymentService(strategy)
+-> service.pay()
+-> selected strategy executes

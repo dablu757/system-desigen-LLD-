@@ -5,15 +5,22 @@
 
 '''
 __new__ is responsible for object creation, while __init__ initializes it.
+
 In Singleton, we override __new__ to ensure only one instance is created.
+
 cls refers to the class itself and is used to access class-level variables like _instance.
 If the instance already exists, we return it instead of creating a new one.
+
 ---------------------------------------------------
 cls → class reference
+
 __new__() → controls object creation
+
 _instance → stores single instance
+
 super().__new__(cls) → actually creates object
 ---------------------------------------------------
+
 Short Interview Definition (One Line)
     Singleton ensures that only one object of a class exists throughout 
     the application and provides controlled global access to it.
@@ -26,7 +33,33 @@ Singleton is used in:
     5. Thread pools
     6. Hardware controllers
     7. Application context containers
+
 '''
+#simple singleton
+
+class Singleton:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import time
 import threading
 

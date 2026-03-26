@@ -79,6 +79,47 @@ Use Observer when one object's state change should automatically notify many
 dependent objects without tightly coupling their behavior.
 """
 
+class Subject:
+    def __init__(self):
+        self.observers = []
+
+    def subscribe(self, observer):
+        self.observers.append(observer)
+
+    def notify(self, message):
+        for observer in self.observers:
+            observer.update(message)
+
+
+class Observer:
+    def update(self, message):
+        print(f"Received: {message}")
+
+
+# Usage
+subject = Subject()
+
+obs1 = Observer()
+obs2 = Observer()
+
+subject.subscribe(obs1)
+subject.subscribe(obs2)
+
+subject.notify("New video uploaded!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from abc import ABC, abstractmethod
 
 #observer interface class

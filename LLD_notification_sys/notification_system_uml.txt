@@ -1,0 +1,113 @@
+NOTIFICATION SYSTEM UML
+
+==============================
+1. CLASS DIAGRAM
+==============================
+
++-----------------------------+
+|            User             |
++-----------------------------+
+| - user_id: int              |
+| - email: str                |
+| - phone: str                |
+| - preferences: Dict[str,bool]|
++-----------------------------+
+
++-----------------------------+
+|        Notification         |
++-----------------------------+
+| - user: User                |
+| - message: str              |
++-----------------------------+
+
++--------------------------------------+
+|        NotificationResult            |
++--------------------------------------+
+| - sent_channels: List[str]           |
+| - failed_channels: Dict[str, str]    |
++--------------------------------------+
+
+Notification --> User
+
+
++--------------------------------------+
+|      NotificationChannel (ABC)       |
++--------------------------------------+
+| + send(notification): None           |
++--------------------------------------+
+                  ^
+                  |
+     ---------------------------------
+     |               |               |
++----------------+ +---------------+ +----------------+
+| EmailNotification| |SMSNotification| |PushNotification|
++----------------+ +---------------+ +----------------+
+| + send(...)    | | + send(...)   | | + send(...)    |
++----------------+ +---------------+ +----------------+
+
+
++------------------------------------------------------+
+|                 NotificationFactory                  |
++------------------------------------------------------+
+| - _channels: Dict[str, Type[NotificationChannel]]    |
++------------------------------------------------------+
+| + register_channel(channel_type, channel_class)      |
+| + get_notification_channel(channel_type)             |
++------------------------------------------------------+
+
+
++------------------------------------------------------+
+|                NotificationService                   |
++------------------------------------------------------+
+| - factory                                            |
++------------------------------------------------------+
+| + send_notification(notification): NotificationResult|
++------------------------------------------------------+
+
+NotificationService --> NotificationFactory
+NotificationService --> Notification
+NotificationService --> NotificationResult
+NotificationFactory --> NotificationChannel
+
+
+==============================
+2. SEQUENCE DIAGRAM
+==============================
+
+Client
+  |
+  v
+NotificationService.send_notification(notification)
+  |
+  v
+Check user preferences
+  |
+  v
+NotificationFactory.get_notification_channel(channel_type)
+  |
+  v
+ConcreteChannel.send(notification)
+  |
+  v
+Update NotificationResult
+  |
+  v
+Return sent / failed channel summary
+
+
+==============================
+3. INTERVIEW NOTES
+==============================
+
+Patterns used:
+- Strategy Pattern: Email / SMS / Push implement the same interface
+- Factory Pattern: channel creation is centralized
+- Service Layer: orchestration logic lives in NotificationService
+
+Possible future improvements:
+- retry mechanism
+- async queue processing
+- template support
+- notification persistence
+- fallback channel support
+- enums instead of raw strings

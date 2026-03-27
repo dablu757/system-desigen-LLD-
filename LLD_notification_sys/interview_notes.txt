@@ -1,0 +1,94 @@
+NOTIFICATION SYSTEM INTERVIEW NOTES
+
+1. Problem Statement
+- Design a notification system that can send messages through multiple channels.
+- Supported channels: Email, SMS, Push.
+- The system should respect user preferences.
+- The design should be easy to extend for future channels.
+
+2. High-Level Explanation
+- User stores contact details and notification preferences.
+- Notification stores the message to be sent.
+- NotificationChannel is the common interface for all channels.
+- EmailNotification, SMSNotification, and PushNotification implement channel-specific behavior.
+- NotificationFactory creates the correct channel object.
+- NotificationService contains the main orchestration logic.
+- NotificationResult tracks which channels succeeded and which failed.
+
+3. Design Patterns Used
+- Strategy Pattern:
+  Different channel classes implement the same send() interface.
+- Factory Pattern:
+  Channel object creation is centralized in NotificationFactory.
+- Service Layer:
+  NotificationService manages the workflow and business logic.
+
+4. SOLID Principles
+- SRP:
+  Each class has one clear responsibility.
+- OCP:
+  New channels can be added with minimal code changes.
+- DIP:
+  Service logic depends on abstractions rather than concrete channel behavior.
+
+5. End-to-End Flow
+1. Create a User.
+2. Create a Notification.
+3. Call NotificationService.send_notification().
+4. Service checks enabled user preferences.
+5. Factory returns the required notification channel.
+6. Channel sends the message.
+7. Service returns a NotificationResult with sent and failed channels.
+
+6. Why This Design Is Good
+- Clean separation of concerns.
+- Easy to explain in an interview.
+- Easy to extend with new channels.
+- Failures in one channel do not stop the others.
+- Better maintainability and testability.
+
+7. Limitations In Current Version
+- Channel types are raw strings, so typos are possible.
+- No retry mechanism for temporary failures.
+- No database or persistence layer.
+- No async processing or message queue.
+- No template engine for dynamic messages.
+- No rate limiting or idempotency support.
+
+8. Improvements For Production
+- Use Enum for channel types.
+- Add retry logic with backoff.
+- Store notification history in DB.
+- Use Kafka, RabbitMQ, or SQS for async processing.
+- Add template support for different notification types.
+- Add fallback logic, like SMS if Push fails.
+- Add rate limiting and monitoring.
+- Add scheduling support for delayed notifications.
+
+9. If Interviewer Asks "How To Add WhatsApp?"
+- Create a WhatsAppNotification class implementing NotificationChannel.
+- Register it in NotificationFactory.
+- Add "whatsapp": True in user preferences if needed.
+- No major change is needed in NotificationService.
+
+10. If Interviewer Asks "Why Factory?"
+- The service should not handle object creation.
+- Factory centralizes creation logic.
+- This keeps the system cleaner and more maintainable.
+
+11. If Interviewer Asks "Why Strategy?"
+- Each channel has different sending behavior.
+- A common interface keeps the design consistent and extensible.
+
+12. Short Spoken Answer
+"I designed the notification system using Strategy Pattern and Factory Pattern.
+Each channel like Email, SMS, and Push implements a common NotificationChannel interface,
+which keeps the design extensible. NotificationFactory is responsible for creating the
+required channel object, and NotificationService handles the core flow by checking user
+preferences and sending notifications through enabled channels. This makes the system
+modular, maintainable, and easy to extend. For production, I would further improve it
+using retries, async queues, templates, persistence, and monitoring."
+
+13. Best Final Closing Line
+"This design is good for an LLD interview because it is simple, scalable in structure,
+and demonstrates clear use of OOP principles and design patterns."

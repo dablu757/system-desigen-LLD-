@@ -1,0 +1,36 @@
+NOTIFICATION SYSTEM 1-MINUTE REVISION
+
+1. What I Built
+- A notification system that sends messages via Email, SMS, and Push.
+- It checks user preferences before sending.
+
+2. Main Classes
+- User: stores contact details and preferences.
+- Notification: stores the message and target user.
+- NotificationChannel: common interface for all channels.
+- EmailNotification / SMSNotification / PushNotification: concrete implementations.
+- NotificationFactory: creates the correct channel object.
+- NotificationService: orchestrates the sending flow.
+- NotificationResult: stores success and failure results.
+
+3. Design Patterns
+- Strategy Pattern: each channel has its own send behavior.
+- Factory Pattern: channel creation is centralized.
+- Service Layer: business flow stays in NotificationService.
+
+4. Why This Design Is Good
+- Clean and modular.
+- Easy to extend.
+- Easy to explain in interviews.
+- One channel failure does not stop others.
+
+5. Key Interview Line
+"I used Strategy Pattern for channel-specific behavior, Factory Pattern for object creation,
+and a Service Layer for orchestration. This keeps the design extensible and maintainable."
+
+6. Production Improvements
+- Add retry logic.
+- Add async queue processing.
+- Store notification logs in DB.
+- Add templates and fallback channels.
+- Use enums instead of raw strings.

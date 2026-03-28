@@ -14,6 +14,7 @@ from typing import Dict, List, Type
 
 @dataclass
 class User:
+    # Stores contact information and the user's channel preferences.
     user_id: int
     email: str
     phone: str
@@ -22,18 +23,21 @@ class User:
 
 @dataclass
 class Notification:
+    # Represents the final message to be delivered to a user.
     user: User
     message: str
 
 
 @dataclass
 class NotificationResult:
+    # Captures which channels succeeded and which failed during one send attempt.
     sent_channels: List[str] = field(default_factory=list)
     failed_channels: Dict[str, str] = field(default_factory=dict)
 
 
 @dataclass
 class Event:
+    # Represents a business event that can trigger notification delivery.
     name: str
     user: User
     message: str
@@ -42,7 +46,7 @@ class Event:
 class NotificationChannel(ABC):
     @abstractmethod
     def send(self, notification: Notification) -> None:
-        """Send notification via a specific channel."""
+        """Send the notification using a concrete delivery channel."""
 
 
 class EmailNotification(NotificationChannel):
@@ -68,6 +72,7 @@ class PushNotification(NotificationChannel):
 
 
 class NotificationFactory:
+    # Central registry for channel implementations.
     _channels: Dict[str, Type[NotificationChannel]] = {
         "email": EmailNotification,
         "sms": SMSNotification,
@@ -87,6 +92,7 @@ class NotificationService:
         self.factory = factory
 
     def send_notification(self, notification: Notification) -> NotificationResult:
+        # The service iterates through enabled user preferences and tries each channel.
         result = NotificationResult()
 
         for channel_type, is_enabled in notification.user.preferences.items():
@@ -98,6 +104,7 @@ class NotificationService:
                 notifier.send(notification)
                 result.sent_channels.append(channel_type)
             except Exception as exc:
+                # Channel failures are isolated so one bad channel does not stop others.
                 result.failed_channels[channel_type] = str(exc)
 
         return result
@@ -106,10 +113,11 @@ class NotificationService:
 class Observer(ABC):
     @abstractmethod
     def update(self, event: Event) -> None:
-        """React to an emitted event."""
+        """React to a published business event."""
 
 
 class NotificationObserver(Observer):
+    # Converts business events into notifications and delegates delivery to the service.
     def __init__(self, notification_service: NotificationService):
         self.notification_service = notification_service
 
@@ -124,17 +132,23 @@ class NotificationObserver(Observer):
 
 class EventManager:
     def __init__(self) -> None:
+        # Keeps a list of subscribers interested in emitted events.
         self.observers: List[Observer] = []
 
     def subscribe(self, observer: Observer) -> None:
         self.observers.append(observer)
 
     def notify(self, event: Event) -> None:
+        # Broadcast the same event to all subscribed observers.
         for observer in self.observers:
             observer.update(event)
 
 
 if __name__ == "__main__":
+    # Example flow:
+    # 1. Create a user and an event source.
+    # 2. Subscribe the notification observer.
+    # 3. Publish an ORDER_PLACED event.
     user = User(
         user_id=1,
         email="testuser@gmail.com",

@@ -1,0 +1,115 @@
+COMMAND DESIGN PATTERN UML
+
+==============================
+1. CLASS DIAGRAM
+==============================
+
++------------------------+
+|      Command (ABC)     |
++------------------------+
+| + execute(): None      |
+| + undo(): None         |
++------------------------+
+           ^
+           |
+   -----------------------------------------
+   |                  |                    |
+   |                  |                    |
++------------------+ +------------------+ +------------------+
+|  LightOnCommand  | | LightOffCommand  | | FanStartCommand  |
++------------------+ +------------------+ +------------------+
+| - light: Light   | | - light: Light   | | - fan: Fan       |
++------------------+ +------------------+ +------------------+
+| + execute()      | | + execute()      | | + execute()      |
+| + undo()         | | + undo()         | | + undo()         |
++------------------+ +------------------+ +------------------+
+
++------------------+
+|  FanStopCommand  |
++------------------+
+| - fan: Fan       |
++------------------+
+| + execute()      |
+| + undo()         |
++------------------+
+
+
++------------------------+
+|         Light          |
++------------------------+
+| + turn_on(): None      |
+| + turn_off(): None     |
++------------------------+
+
++------------------------+
+|          Fan           |
++------------------------+
+| + start(): None        |
+| + stop(): None         |
++------------------------+
+
+
++-------------------------------+
+|         RemoteControl         |
++-------------------------------+
+| - history: List[Command]      |
++-------------------------------+
+| + submit(command): None       |
+| + undo_last(): None           |
++-------------------------------+
+
+LightOnCommand --> Light
+LightOffCommand --> Light
+FanStartCommand --> Fan
+FanStopCommand --> Fan
+RemoteControl --> Command
+
+
+==============================
+2. FLOW
+==============================
+
+Client
+  |
+  v
+Create Receiver objects (Light, Fan)
+  |
+  v
+Create Command objects with receivers
+  |
+  v
+Pass commands to RemoteControl
+  |
+  v
+RemoteControl calls execute()
+  |
+  v
+Concrete command delegates work to receiver
+  |
+  v
+RemoteControl stores command in history
+  |
+  v
+undo_last() calls undo() on last command
+
+
+==============================
+3. INTERVIEW NOTES
+==============================
+
+Intent:
+- Encapsulate a request as an object.
+- Decouple invoker from receiver.
+
+Participants:
+- Command: common interface
+- ConcreteCommand: wraps receiver action
+- Receiver: actual business logic
+- Invoker: triggers command
+- Client: creates and connects everything
+
+Benefits:
+- supports undo/redo
+- supports command history
+- easy to queue or log commands
+- reduces coupling between caller and business logic

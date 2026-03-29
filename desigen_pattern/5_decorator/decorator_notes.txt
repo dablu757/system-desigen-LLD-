@@ -1,0 +1,26 @@
+DECORATOR PATTERN 1-MINUTE NOTES
+
+1. Definition
+- Decorator adds new behavior to an object dynamically without changing its class.
+
+2. Main Idea
+- start with base object
+- wrap it with decorators
+- each decorator adds extra behavior
+
+3. Flow
+- Component -> Decorator -> Decorator -> Final object
+
+4. When To Use
+- optional features at runtime
+- avoid too many subclasses
+- middleware-like behavior
+
+5. Benefits
+- flexible and reusable
+- follows Open/Closed Principle
+- composition over inheritance
+
+6. Key Interview Line
+"Decorator Pattern wraps an object to add responsibilities dynamically at runtime
+without modifying the original class."

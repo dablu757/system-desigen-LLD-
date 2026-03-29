@@ -1,0 +1,49 @@
+SINGLETON DESIGN PATTERN UML
+
+==============================
+1. CLASS DIAGRAM
+==============================
+
++--------------------------------------+
+|              AppConfig               |
++--------------------------------------+
+| - _instance: AppConfig               |
+| - _lock: Lock                        |
+| - environment: str                   |
+| - debug: bool                        |
++--------------------------------------+
+| + __new__(): AppConfig               |
+| + show(): None                       |
++--------------------------------------+
+
+
+==============================
+2. FLOW
+==============================
+
+Client
+  |
+  v
+Create AppConfig()
+  |
+  v
+Check if _instance already exists
+  |
+  +--> yes -> return existing instance
+  |
+  +--> no -> create and store single instance
+
+
+==============================
+3. INTERVIEW NOTES
+==============================
+
+Intent:
+- ensure only one instance exists
+- provide global access to it
+
+Common uses:
+- config manager
+- logger
+- database connection manager
+- cache manager

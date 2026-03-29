@@ -1,0 +1,197 @@
+DESIGN PATTERNS COMPARISON
+==========================
+
+Use this file for interview questions like:
+- "Why this pattern and not that one?"
+- "What is the difference between X and Y?"
+
+
+======================================================================
+1) STRATEGY VS COMMAND
+======================================================================
+
+Strategy:
+- used to switch algorithms/behavior
+- focuses on how something is done
+- example: UPI vs Credit Card vs Debit Card payment
+
+Command:
+- encapsulates a request/action as an object
+- focuses on what action should be executed
+- example: LightOnCommand, Undo, Queue of tasks
+
+Short answer:
+- Strategy = interchangeable behavior
+- Command = encapsulated action/request
+
+
+======================================================================
+2) ADAPTER VS FACADE
+======================================================================
+
+Adapter:
+- converts one interface into another expected interface
+- solves compatibility problem
+- example: Stripe has `make_payment()`, client expects `pay()`
+
+Facade:
+- provides a simplified interface to a complex subsystem
+- solves complexity problem
+- example: one `CheckoutFacade` hides inventory, payment, shipping calls
+
+Short answer:
+- Adapter = interface conversion
+- Facade = simplified interface
+
+
+======================================================================
+3) FACTORY VS ABSTRACT FACTORY
+======================================================================
+
+Factory:
+- creates one type of product
+- example: create one notification sender
+
+Abstract Factory:
+- creates families of related products
+- example: create burger + drink from the same restaurant family
+
+Short answer:
+- Factory = one product creation
+- Abstract Factory = related family creation
+
+
+======================================================================
+4) DECORATOR VS PROXY
+======================================================================
+
+Decorator:
+- adds new behavior dynamically
+- example: add milk, sugar, cream to coffee
+
+Proxy:
+- controls access to an object
+- example: access control, lazy loading, caching proxy
+
+Short answer:
+- Decorator = add behavior
+- Proxy = control access
+
+
+======================================================================
+5) OBSERVER VS PUB-SUB
+======================================================================
+
+Observer:
+- subject knows observers directly
+- often in-process and object-level
+
+Pub-Sub:
+- publisher and subscriber are decoupled by message broker/event bus
+- more common in distributed systems
+
+Short answer:
+- Observer = direct subscription
+- Pub-Sub = indirect messaging through broker
+
+
+======================================================================
+6) SINGLETON VS STATIC CLASS / GLOBAL VARIABLE
+======================================================================
+
+Singleton:
+- one object with controlled access
+- can still implement interfaces and state
+
+Global variable / static:
+- less control
+- harder to manage lifecycle and dependencies
+
+Short answer:
+- Singleton is a controlled object instance
+- global variable is just shared data
+
+
+======================================================================
+7) DECORATOR VS INHERITANCE
+======================================================================
+
+Decorator:
+- runtime composition
+- flexible
+- avoids subclass explosion
+
+Inheritance:
+- compile/class-time extension
+- rigid for many combinations
+
+Short answer:
+- Decorator = dynamic wrapping
+- Inheritance = fixed hierarchy
+
+
+======================================================================
+8) FACTORY VS BUILDER
+======================================================================
+
+Factory:
+- creates object in one step
+- usually used when type selection matters
+
+Builder:
+- constructs complex object step by step
+- usually used when many optional fields/configurations exist
+
+Short answer:
+- Factory = choose object type
+- Builder = assemble complex object gradually
+
+
+======================================================================
+9) STATE VS STRATEGY
+======================================================================
+
+State:
+- behavior changes based on internal state transitions
+- object appears to change class-like behavior
+- example: vending machine or order state
+
+Strategy:
+- behavior selected externally
+- example: choose payment method
+
+Short answer:
+- State = internal state-driven behavior
+- Strategy = externally chosen behavior
+
+
+======================================================================
+10) COMMAND VS OBSERVER
+======================================================================
+
+Command:
+- one action wrapped as object
+- can be queued, logged, undone
+
+Observer:
+- broadcast notification to many subscribers
+- event-driven relationship
+
+Short answer:
+- Command = one action object
+- Observer = one-to-many notification
+
+
+======================================================================
+BEST INTERVIEW LINES
+======================================================================
+
+If asked "why not Strategy instead of Command?":
+- "Because here I want to represent actions as objects and support undo/history,
+not just swap algorithms."
+
+If asked "why not inheritance instead of Decorator?":
+- "Because behavior combinations can grow quickly, and Decorator keeps it flexible at runtime."
+
+If asked "why not direct object creation instead of Factory?":
+- "Because object creation may expand over time, and Factory keeps the client independent from concrete classes."

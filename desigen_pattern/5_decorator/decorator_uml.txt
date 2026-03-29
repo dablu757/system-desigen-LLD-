@@ -1,0 +1,69 @@
+DECORATOR DESIGN PATTERN UML
+
+==============================
+1. CLASS DIAGRAM
+==============================
+
++--------------------------+
+|       Coffee (ABC)       |
++--------------------------+
+| + cost(): int            |
+| + description(): str     |
++--------------------------+
+             ^
+             |
+     -------------------------
+     |                       |
++-------------------+  +-----------------------+
+|   SimpleCoffee    |  |   CoffeeDecorator     |
++-------------------+  +-----------------------+
+| + cost()          |  | - coffee: Coffee      |
+| + description()   |  +-----------------------+
++-------------------+              ^
+                                   |
+                 ------------------------------------------
+                 |                    |                   |
++----------------------+ +----------------------+ +---------------------------+
+|    MilkDecorator     | |   SugarDecorator     | | WhippedCreamDecorator    |
++----------------------+ +----------------------+ +---------------------------+
+| + cost()             | | + cost()             | | + cost()                 |
+| + description()      | | + description()      | | + description()          |
++----------------------+ +----------------------+ +---------------------------+
+
+CoffeeDecorator --> Coffee
+
+
+==============================
+2. FLOW
+==============================
+
+Client
+  |
+  v
+Create SimpleCoffee
+  |
+  v
+Wrap with MilkDecorator
+  |
+  v
+Wrap with SugarDecorator
+  |
+  v
+Wrap with WhippedCreamDecorator
+  |
+  v
+Get final cost and description
+
+
+==============================
+3. INTERVIEW NOTES
+==============================
+
+Intent:
+- add behavior dynamically at runtime
+- avoid subclass explosion
+
+Benefits:
+- flexible composition
+- open for extension
+- better than deep inheritance for optional features

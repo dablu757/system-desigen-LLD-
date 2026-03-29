@@ -1,0 +1,61 @@
+STRATEGY DESIGN PATTERN UML
+
+==============================
+1. CLASS DIAGRAM
+==============================
+
++--------------------------------+
+|     PaymentStrategy (ABC)      |
++--------------------------------+
+| + pay(amount): None            |
++--------------------------------+
+               ^
+               |
+     ---------------------------------------
+     |                  |                  |
++------------------+ +-------------------+ +------------------+
+|    UPIPayment    | | CreditCardPayment | | DebitCardPayment |
++------------------+ +-------------------+ +------------------+
+| + pay(amount)    | | + pay(amount)     | | + pay(amount)    |
++------------------+ +-------------------+ +------------------+
+
+
++--------------------------------------+
+|           CheckoutService            |
++--------------------------------------+
+| - payment_strategy                   |
++--------------------------------------+
+| + checkout(amount): None             |
++--------------------------------------+
+
+CheckoutService --> PaymentStrategy
+
+
+==============================
+2. FLOW
+==============================
+
+Client
+  |
+  v
+Choose payment strategy
+  |
+  v
+Pass strategy to CheckoutService
+  |
+  v
+CheckoutService calls strategy.pay(amount)
+
+
+==============================
+3. INTERVIEW NOTES
+==============================
+
+Intent:
+- encapsulate interchangeable algorithms
+- switch behavior at runtime
+
+Benefits:
+- removes if/else chains
+- easy to extend new strategies
+- follows Open/Closed Principle

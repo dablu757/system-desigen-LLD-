@@ -1,0 +1,75 @@
+OBSERVER DESIGN PATTERN UML
+
+==============================
+1. CLASS DIAGRAM
+==============================
+
++-----------------------------+
+|       Observer (ABC)        |
++-----------------------------+
+| + update(message): None     |
++-----------------------------+
+              ^
+              |
+     ------------------------------
+     |                            |
++--------------------+ +---------------------+
+|  EmailSubscriber   | |  MobileSubscriber   |
++--------------------+ +---------------------+
+| + update(message)  | | + update(message)   |
++--------------------+ +---------------------+
+
+
++-------------------------------+
+|         Subject (ABC)         |
++-------------------------------+
+| + subscribe(observer): None   |
+| + unsubscribe(observer): None |
+| + notify(message): None       |
++-------------------------------+
+               ^
+               |
++----------------------------------------+
+|            YouTubeChannel              |
++----------------------------------------+
+| - channel_name: str                    |
+| - observers: List[Observer]            |
++----------------------------------------+
+| + subscribe(observer): None            |
+| + unsubscribe(observer): None          |
+| + notify(message): None                |
+| + upload_video(title): None            |
++----------------------------------------+
+
+YouTubeChannel --> Observer
+
+
+==============================
+2. FLOW
+==============================
+
+Client subscribes observers
+  |
+  v
+Subject state changes
+  |
+  v
+Subject notifies all observers
+  |
+  v
+Observers react automatically
+
+
+==============================
+3. INTERVIEW NOTES
+==============================
+
+Intent:
+- one-to-many relationship
+- automatic notification on state change
+
+Use cases:
+- notification system
+- event listeners
+- stock price updates
+- live dashboards

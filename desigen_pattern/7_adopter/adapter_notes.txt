@@ -1,0 +1,46 @@
+ADAPTER PATTERN 1-MINUTE NOTES
+
+1. Definition
+- Adapter Pattern converts one interface into another interface that the client expects.
+- It acts like a translator between incompatible classes.
+
+2. Main Idea
+- Client should not change.
+- Existing third-party or legacy code should also not change.
+- Adapter sits in between and bridges both interfaces.
+
+3. Flow
+- Client -> Target Interface -> Adapter -> Adaptee
+
+4. Participants
+- Target:
+  Interface expected by the client
+- Adapter:
+  Converts client request into adaptee request
+- Adaptee:
+  Existing class with incompatible interface
+- Client:
+  Uses only the target interface
+
+5. Common Interview Example
+- Checkout system expects `pay(amount)`
+- Third-party Stripe exposes `make_payment(amount)`
+- Third-party PayPal exposes `send_money(amount)`
+- Adapter converts both to a common `pay(amount)` interface
+
+6. When To Use
+- third-party library integration
+- legacy system integration
+- incompatible interfaces
+
+7. Benefits
+- reuses old code
+- avoids changing client code
+- improves flexibility
+
+8. Drawback
+- adds one extra abstraction layer
+
+9. Key Interview Line
+"Adapter Pattern is used when the client expects one interface, but the existing or
+third-party class provides a different interface. The adapter bridges the mismatch."

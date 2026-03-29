@@ -1,0 +1,25 @@
+SINGLETON PATTERN 1-MINUTE NOTES
+
+1. Definition
+- Singleton ensures only one object of a class exists in the application.
+
+2. Main Idea
+- class stores its single instance internally
+- every caller gets the same instance
+
+3. When To Use
+- configuration manager
+- logger
+- cache manager
+- database connection manager
+
+4. Benefits
+- controlled global access
+- avoids duplicate shared resources
+
+5. Drawback
+- can introduce hidden global state
+- harder to test if overused
+
+6. Key Interview Line
+"Singleton is useful when exactly one shared instance should exist across the system."

@@ -1,0 +1,25 @@
+FACTORY PATTERN 1-MINUTE NOTES
+
+1. Definition
+- Factory Pattern creates objects without exposing creation logic to the client.
+
+2. Main Idea
+- Client asks factory for an object.
+- Factory decides which concrete class to instantiate.
+
+3. Flow
+- Client -> Factory -> Concrete Product
+
+4. When To Use
+- object creation is complex
+- client should not know concrete classes
+- many related object types exist
+
+5. Benefits
+- centralizes creation logic
+- reduces coupling
+- easy to extend
+
+6. Key Interview Line
+"Factory Pattern is used to create objects through a common creator so the client
+does not depend directly on concrete classes."

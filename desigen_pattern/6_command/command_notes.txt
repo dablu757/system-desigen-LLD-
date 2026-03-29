@@ -1,0 +1,26 @@
+COMMAND PATTERN 1-MINUTE NOTES
+
+1. Definition
+- Command Pattern encapsulates a request or action as an object.
+
+2. Main Idea
+- invoker triggers command
+- command delegates work to receiver
+- command can also support undo
+
+3. Flow
+- Client -> Invoker -> Command -> Receiver
+
+4. When To Use
+- undo/redo support
+- action history
+- request queue
+- menu actions and remote controls
+
+5. Benefits
+- decouples sender from executor
+- easy to log, queue, and undo commands
+
+6. Key Interview Line
+"Command Pattern is used when actions should be treated as objects so they can
+be executed, stored, queued, or undone."

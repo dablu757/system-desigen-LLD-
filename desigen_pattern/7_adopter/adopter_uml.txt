@@ -1,0 +1,97 @@
+ADAPTER DESIGN PATTERN UML
+
+==============================
+1. CLASS DIAGRAM
+==============================
+
++------------------------------+
+|    PaymentProcessor (ABC)    |
++------------------------------+
+| + pay(amount): None          |
++------------------------------+
+               ^
+               |
+      -------------------------
+      |                       |
++-------------------+ +-------------------+
+|   StripeAdapter   | |   PayPalAdapter   |
++-------------------+ +-------------------+
+| - stripe_gateway  | | - paypal_gateway  |
++-------------------+ +-------------------+
+| + pay(amount)     | | + pay(amount)     |
++-------------------+ +-------------------+
+
+
++------------------------------+
+|        StripeGateway         |
++------------------------------+
+| + make_payment(amount): None |
++------------------------------+
+
++------------------------------+
+|        PayPalGateway         |
++------------------------------+
+| + send_money(value): None    |
++------------------------------+
+
+
++------------------------------------+
+|         CheckoutService            |
++------------------------------------+
+| - payment_processor                |
++------------------------------------+
+| + checkout(amount): None           |
++------------------------------------+
+
+StripeAdapter --> StripeGateway
+PayPalAdapter --> PayPalGateway
+CheckoutService --> PaymentProcessor
+
+
+==============================
+2. FLOW
+==============================
+
+Client
+  |
+  v
+CheckoutService.checkout(amount)
+  |
+  v
+PaymentProcessor.pay(amount)
+  |
+  v
+Adapter converts request
+  |
+  v
+Third-party gateway method is called
+  |
+  v
+Payment completed
+
+
+==============================
+3. INTERVIEW NOTES
+==============================
+
+Intent:
+- Convert one interface into another interface that the client expects.
+
+Participants:
+- Target: PaymentProcessor
+- Adapter: StripeAdapter / PayPalAdapter
+- Adaptee: StripeGateway / PayPalGateway
+- Client: CheckoutService
+
+When to use:
+- third-party library integration
+- legacy code integration
+- mismatched interfaces
+
+Benefits:
+- reuses existing code
+- avoids changing client logic
+- makes integration flexible
+
+Drawback:
+- adds one more abstraction layer

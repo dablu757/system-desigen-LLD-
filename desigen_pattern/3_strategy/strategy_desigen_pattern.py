@@ -1,63 +1,60 @@
 """
 Strategy Design Pattern
-=======================
 
-Definition
-----------
-The Strategy pattern defines a family of algorithms, encapsulates each one,
-and makes them interchangeable at runtime.
+Intent:
+- Define a family of algorithms.
+- Encapsulate each algorithm in a separate class.
+- Make them interchangeable at runtime.
 
-Real-Life Analogy
------------------
-Think of a payment system:
-- A customer wants to pay for an order.
-- The payment can happen through UPI, Debit Card, or Credit Card.
-- The checkout flow remains the same, only the payment method changes.
-
-Interview One-Liner
--------------------
-Use Strategy when you have multiple ways to perform the same task and want to
-switch behavior dynamically without changing the client code.
+Interview example:
+- Checkout service can use UPI, credit card, or debit card payment strategies.
 """
+
+from __future__ import annotations
 
 from abc import ABC, abstractmethod
 
 
-class Payment(ABC):
+class PaymentStrategy(ABC):
+    """Strategy interface."""
+
     @abstractmethod
-    def pay(self):
+    def pay(self, amount: float) -> None:
         pass
 
 
-class UpiPayment(Payment):
-    def pay(self):
-        print("This is UPI payment method")
+class UPIPayment(PaymentStrategy):
+    def pay(self, amount: float) -> None:
+        print(f"Paid Rs. {amount} using UPI")
 
 
-class CreditCardPayment(Payment):
-    def pay(self):
-        print("This is Credit Card payment method")
+class CreditCardPayment(PaymentStrategy):
+    def pay(self, amount: float) -> None:
+        print(f"Paid Rs. {amount} using Credit Card")
 
 
-class DebitCardPayment(Payment):
-    def pay(self):
-        print("This is Debit Card payment method")
+class DebitCardPayment(PaymentStrategy):
+    def pay(self, amount: float) -> None:
+        print(f"Paid Rs. {amount} using Debit Card")
 
 
-class PaymentService:
-    def __init__(self, payment: Payment):
-        self._payment = payment
+class CheckoutService:
+    """Context class that works with any payment strategy."""
 
-    def pay(self):
-        self._payment.pay()
+    def __init__(self, payment_strategy: PaymentStrategy) -> None:
+        self.payment_strategy = payment_strategy
+
+    def checkout(self, amount: float) -> None:
+        print(f"Processing order for Rs. {amount}")
+        self.payment_strategy.pay(amount)
 
 
 if __name__ == "__main__":
-    payment_services = [
-        PaymentService(UpiPayment()),
-        PaymentService(DebitCardPayment()),
-        PaymentService(CreditCardPayment()),
-    ]
+    checkout_service = CheckoutService(UPIPayment())
+    checkout_service.checkout(1200)
 
-    for service in payment_services:
-        service.pay()
+    checkout_service.payment_strategy = CreditCardPayment()
+    checkout_service.checkout(2500)
+
+    checkout_service.payment_strategy = DebitCardPayment()
+    checkout_service.checkout(1800)

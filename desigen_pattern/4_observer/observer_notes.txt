@@ -1,0 +1,28 @@
+OBSERVER PATTERN 1-MINUTE NOTES
+
+1. Definition
+- Observer Pattern defines a one-to-many dependency between objects.
+
+2. Main Idea
+- subject keeps a list of observers
+- when state changes, subject notifies all observers
+
+3. Flow
+- Subject -> Observer1, Observer2, Observer3
+
+4. When To Use
+- event-driven systems
+- notification systems
+- stock and dashboard updates
+
+5. Benefits
+- loose coupling
+- dynamic subscribe/unsubscribe
+- good for broadcast updates
+
+6. Drawback
+- too many observers can make debugging harder
+
+7. Key Interview Line
+"Observer Pattern is used when many dependent objects should react automatically
+to a change in one object."

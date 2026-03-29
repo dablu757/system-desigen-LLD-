@@ -1,0 +1,102 @@
+MOCK INTERVIEW ANSWERS FOR TOP TECH LLD
+=======================================
+
+These are short spoken-style answers you can practice aloud.
+
+
+======================================================================
+1) "WHY DID YOU CHOOSE THIS DESIGN?"
+======================================================================
+
+"I chose this design to keep responsibilities separated and the system easy to extend.
+For example, wherever behavior changes by type, I prefer abstractions and separate implementations
+instead of large conditionals. That makes future additions safer and keeps the client logic clean."
+
+
+======================================================================
+2) "WHY FACTORY HERE?"
+======================================================================
+
+"I used Factory because object creation can grow over time. If the client creates concrete objects
+directly, it becomes tightly coupled to implementation classes. With Factory, the client only asks
+for the required abstraction and the creation logic stays centralized."
+
+
+======================================================================
+3) "WHY STRATEGY HERE?"
+======================================================================
+
+"I used Strategy because the same task can be performed in multiple ways, such as different payment
+or pricing algorithms. Strategy lets me swap behavior cleanly without changing the context class."
+
+
+======================================================================
+4) "WHY OBSERVER HERE?"
+======================================================================
+
+"I use Observer only when updates are event-driven. If one object changes and multiple dependent
+objects should react automatically, Observer keeps the design clean. If the flow is a direct method
+call and there is no event-based requirement, I avoid adding Observer unnecessarily."
+
+
+======================================================================
+5) "WHY NOT JUST USE IF-ELSE?"
+======================================================================
+
+"If-else works for a very small system, but it becomes harder to maintain as new cases are added.
+Using the right pattern isolates change, improves readability, and supports extension without
+touching stable parts of the code."
+
+
+======================================================================
+6) "WHAT ARE THE TRADEOFFS OF THIS DESIGN?"
+======================================================================
+
+"The main tradeoff is more classes and slightly higher upfront design effort. But in return, the
+system becomes cleaner, easier to extend, and easier to test. For interview-scale problems, I try
+to balance simplicity with extensibility and avoid over-engineering."
+
+
+======================================================================
+7) "HOW WOULD YOU SCALE THIS DESIGN?"
+======================================================================
+
+"I would first separate core abstractions from infrastructure concerns, then add persistence,
+async processing where needed, retries for external calls, and monitoring. I would also make sure
+the design remains modular so new features can be added with minimal changes."
+
+
+======================================================================
+8) "HOW WOULD YOU TEST THIS?"
+======================================================================
+
+"I would test abstractions and behaviors separately. For example, I would unit test each concrete
+strategy or command individually, and then test the service or context with mocks or fake
+implementations. This is another benefit of using interfaces and separated responsibilities."
+
+
+======================================================================
+9) "WHICH PATTERNS DO TOP TECH INTERVIEWS MOST COMMONLY EXPECT?"
+======================================================================
+
+"The most common and useful ones in LLD interviews are Factory, Strategy, Observer, Singleton,
+Decorator, Command, and Adapter. Beyond these, State, Builder, Chain of Responsibility, Proxy,
+and Template Method are also very important."
+
+
+======================================================================
+10) "HOW DO YOU DECIDE WHICH PATTERN TO APPLY?"
+======================================================================
+
+"I start from the problem, not the pattern. If creation is the issue, I think Factory. If behavior
+changes, I think Strategy. If state transitions drive behavior, I think State. If multiple listeners
+must react to one event, I think Observer. I choose patterns only when they solve a real design need."
+
+
+======================================================================
+BEST FINAL SPOKEN ANSWER
+======================================================================
+
+"In LLD interviews, I try to keep the design simple first and introduce patterns only where they
+solve a real problem. My goal is not to force patterns, but to use them to improve extensibility,
+reduce coupling, and keep responsibilities clear."

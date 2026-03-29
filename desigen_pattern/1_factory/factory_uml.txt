@@ -1,0 +1,64 @@
+FACTORY DESIGN PATTERN UML
+
+==============================
+1. CLASS DIAGRAM
+==============================
+
++-----------------------------+
+|     Notification (ABC)      |
++-----------------------------+
+| + send(message): None       |
++-----------------------------+
+              ^
+              |
+   ---------------------------------------
+   |                  |                  |
++------------------+ +----------------+ +-----------------+
+| EmailNotification| | SMSNotification| | PushNotification|
++------------------+ +----------------+ +-----------------+
+| + send(message)  | | + send(message)| | + send(message) |
++------------------+ +----------------+ +-----------------+
+
+
++----------------------------------------------+
+|            NotificationFactory               |
++----------------------------------------------+
+| - _notification_map                          |
++----------------------------------------------+
+| + create_notification(type): Notification    |
++----------------------------------------------+
+
+NotificationFactory --> Notification
+
+
+==============================
+2. FLOW
+==============================
+
+Client
+  |
+  v
+NotificationFactory.create_notification(type)
+  |
+  v
+Factory chooses concrete notification class
+  |
+  v
+Concrete notification object created
+  |
+  v
+Client calls send(message)
+
+
+==============================
+3. INTERVIEW NOTES
+==============================
+
+Intent:
+- Centralize object creation logic
+- Hide concrete class creation from client
+
+Benefits:
+- cleaner client code
+- easier to extend with new products
+- supports Open/Closed Principle

@@ -1,0 +1,165 @@
+TOP 10 LLD QUESTIONS WITH PATTERN MAPPING
+=========================================
+
+Use this file to connect design patterns to actual LLD problems.
+
+
+1) Design a Notification System
+Patterns:
+- Strategy: Email, SMS, Push channels
+- Factory: create channel objects
+- Observer: if notifications are event-driven
+- Decorator: retry/logging wrappers
+
+Why:
+- different send behaviors
+- easy extensibility
+- optional event-based trigger
+
+
+2) Design a Parking Lot
+Patterns:
+- Factory: create vehicle or parking spot types
+- Strategy: parking fee calculation
+- Singleton: parking lot manager/config
+- Observer: vacancy display updates
+
+Why:
+- different spot/vehicle types
+- different pricing rules
+
+
+3) Design an Elevator System
+Patterns:
+- State: idle, moving, stopped, maintenance
+- Strategy: scheduling algorithm
+- Observer: floor display updates
+- Singleton: central controller if required
+
+Why:
+- elevator behavior changes with state
+- scheduling logic may vary
+
+
+4) Design BookMyShow / Movie Ticket Booking
+Patterns:
+- Factory: create seat lock/payment/ticket objects
+- Strategy: payment methods
+- Observer: notifications on booking confirmation
+- Singleton: show registry/config if needed
+
+Why:
+- multiple payment flows
+- notifications after booking
+
+
+5) Design a Food Delivery App
+Patterns:
+- Strategy: delivery fee / assignment / payment
+- Observer: order status updates to user and restaurant
+- State: order lifecycle
+- Factory: create delivery partners or notifications
+
+Why:
+- many changing behaviors and event updates
+
+
+6) Design a Ride Sharing System
+Patterns:
+- Strategy: fare calculation / driver matching
+- Observer: trip status updates
+- State: ride requested, accepted, started, completed
+- Factory: vehicle type creation
+
+Why:
+- dynamic pricing and lifecycle states
+
+
+7) Design a Logger System
+Patterns:
+- Singleton: single logger instance
+- Chain of Responsibility: multiple log handlers
+- Decorator: enrich logs with metadata
+- Factory: create handlers
+
+Why:
+- central logger plus extensible handling chain
+
+
+8) Design a Cache System
+Patterns:
+- Strategy: eviction policy like LRU/LFU/FIFO
+- Singleton: shared cache manager
+- Decorator: logging or metrics around cache
+
+Why:
+- eviction rules are interchangeable
+
+
+9) Design a Payment Gateway Integration
+Patterns:
+- Strategy: different payment methods
+- Adapter: integrate third-party gateways
+- Factory: create gateway adapter
+- Command: payment/refund request as action object
+
+Why:
+- external systems rarely expose same interface
+
+
+10) Design an Online Order Management System
+Patterns:
+- State: order placed, packed, shipped, delivered
+- Observer: status notifications
+- Strategy: discount or shipping calculation
+- Factory: create order processors / notifiers
+
+Why:
+- lifecycle-driven design plus notification triggers
+
+
+BEST INTERVIEW RULE
+===================
+
+Do not force patterns.
+
+Good answer:
+- "I would use Strategy here because behavior changes at runtime."
+- "I would use Observer only if updates are event-driven."
+
+Bad answer:
+- "I will use all patterns because design patterns are good."
+
+
+MOST COMMON PATTERN MAPPING SUMMARY
+===================================
+
+Object creation:
+- Factory
+
+One shared instance:
+- Singleton
+
+Changeable behavior:
+- Strategy
+
+Automatic updates:
+- Observer
+
+Dynamic feature layering:
+- Decorator
+
+Undo / actions / queue:
+- Command
+
+Third-party integration:
+- Adapter
+
+Lifecycle-dependent behavior:
+- State
+
+Related product family creation:
+- Abstract Factory
+
+Complex object construction:
+- Builder

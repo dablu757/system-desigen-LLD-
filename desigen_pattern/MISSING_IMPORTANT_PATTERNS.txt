@@ -1,0 +1,167 @@
+MISSING IMPORTANT DESIGN PATTERNS
+=================================
+
+You already covered:
+- Factory
+- Singleton
+- Strategy
+- Observer
+- Decorator
+- Command
+- Adapter
+
+These are the most important remaining patterns for LLD interviews.
+
+
+======================================================================
+1) STATE PATTERN
+======================================================================
+
+Why important:
+- very frequently used in LLD interviews
+
+When to use:
+- object behavior changes based on internal state
+
+Examples:
+- elevator
+- vending machine
+- order lifecycle
+- traffic signal
+
+One-line definition:
+- State Pattern lets an object change its behavior when its internal state changes.
+
+
+======================================================================
+2) BUILDER PATTERN
+======================================================================
+
+Why important:
+- useful when objects have many optional fields
+
+When to use:
+- step-by-step object creation
+- avoid telescoping constructors
+
+Examples:
+- query builder
+- request builder
+- house / pizza / computer configuration
+
+One-line definition:
+- Builder constructs complex objects step by step.
+
+
+======================================================================
+3) CHAIN OF RESPONSIBILITY
+======================================================================
+
+Why important:
+- common in logger, middleware, validation pipeline
+
+When to use:
+- multiple handlers may process the same request
+
+Examples:
+- logger levels
+- authentication and authorization pipeline
+- request validation pipeline
+
+One-line definition:
+- A request is passed through a chain of handlers until one or more handle it.
+
+
+======================================================================
+4) PROXY PATTERN
+======================================================================
+
+Why important:
+- often asked with access control, lazy loading, caching
+
+When to use:
+- need a placeholder or access controller around a real object
+
+Examples:
+- virtual proxy for large image
+- protection proxy for auth
+- caching proxy
+
+One-line definition:
+- Proxy controls access to another object.
+
+
+======================================================================
+5) FACADE PATTERN
+======================================================================
+
+Why important:
+- useful in service orchestration and subsystem simplification
+
+When to use:
+- complex subsystem should be exposed through a simpler API
+
+Examples:
+- checkout facade for payment, inventory, shipping
+- one API over multiple internal services
+
+One-line definition:
+- Facade provides a simple unified interface to a complex subsystem.
+
+
+======================================================================
+6) TEMPLATE METHOD
+======================================================================
+
+Why important:
+- useful when workflow is fixed but steps vary
+
+When to use:
+- same process structure with different step implementations
+
+Examples:
+- report generation
+- data parsing pipelines
+- payment workflow with different subclasses
+
+One-line definition:
+- Template Method defines a fixed algorithm skeleton while subclasses customize some steps.
+
+
+======================================================================
+7) PROTOTYPE
+======================================================================
+
+Why important:
+- asked less often than State/Builder, but still useful
+
+When to use:
+- object creation is expensive and cloning is easier
+
+Examples:
+- copy preconfigured objects
+- game characters
+- document templates
+
+One-line definition:
+- Prototype creates new objects by copying existing ones.
+
+
+======================================================================
+RECOMMENDED ORDER TO STUDY NEXT
+======================================================================
+
+1. State
+2. Builder
+3. Chain of Responsibility
+4. Proxy
+5. Facade
+6. Template Method
+7. Prototype
+
+
+BEST INTERVIEW TIP
+==================
+
+If you master these seven additional patterns at a high level, your design-pattern
+coverage becomes very strong for most top tech LLD interviews.

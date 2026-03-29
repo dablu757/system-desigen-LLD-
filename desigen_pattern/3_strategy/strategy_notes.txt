@@ -1,0 +1,26 @@
+STRATEGY PATTERN 1-MINUTE NOTES
+
+1. Definition
+- Strategy Pattern defines a family of algorithms and makes them interchangeable.
+
+2. Main Idea
+- put each algorithm in a separate class
+- client uses one common interface
+- behavior can change at runtime
+
+3. Flow
+- Client -> Context -> Strategy
+
+4. When To Use
+- multiple ways to do the same task
+- need runtime switching
+- large if/else chains based on behavior
+
+5. Benefits
+- cleaner code
+- easy to add new strategies
+- promotes composition over inheritance
+
+6. Key Interview Line
+"Strategy Pattern is used when there are multiple ways to perform the same task
+and the behavior should be switchable at runtime."

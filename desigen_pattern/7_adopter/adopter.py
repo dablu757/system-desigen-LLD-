@@ -19,6 +19,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 
 
+#target interface expected by the client
 class PaymentProcessor(ABC):
     """Target interface expected by the client code."""
 
@@ -27,13 +28,12 @@ class PaymentProcessor(ABC):
         pass
 
 
+#third party service with its own incompatible
 class StripeGateway:
     """Existing third-party service with its own incompatible API."""
 
     def make_payment(self, amount_in_rupees: float) -> None:
         print(f"Stripe payment of Rs. {amount_in_rupees} completed")
-
-
 class PayPalGateway:
     """Another third-party service with a different method name."""
 
@@ -41,6 +41,8 @@ class PayPalGateway:
         print(f"PayPal payment of Rs. {value} completed")
 
 
+
+#adapter connvert client call into third party gateway
 class StripeAdapter(PaymentProcessor):
     """Adapter converts client calls into StripeGateway calls."""
 
@@ -49,8 +51,6 @@ class StripeAdapter(PaymentProcessor):
 
     def pay(self, amount: float) -> None:
         self.stripe_gateway.make_payment(amount)
-
-
 class PayPalAdapter(PaymentProcessor):
     """Adapter converts client calls into PayPalGateway calls."""
 
@@ -61,6 +61,7 @@ class PayPalAdapter(PaymentProcessor):
         self.paypal_gateway.send_money(amount)
 
 
+#client class 
 class CheckoutService:
     """
     Client class.
@@ -76,6 +77,8 @@ class CheckoutService:
         self.payment_processor.pay(amount)
         print("Order placed successfully")
 
+
+#client call
 
 if __name__ == "__main__":
     stripe_gateway = StripeGateway()
